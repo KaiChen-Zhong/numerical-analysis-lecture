@@ -1,0 +1,26 @@
+node_modules/
+dist/
+.output/
+.vinxi/
+.nitro/
+.env
+.env.*
+!.env.example
+npm-debug.log*
+*.log
+.DS_Store
+coverage/
+.vercel
+
+# sandbox / builder internals
+.grok/
+.project_id
+.node_modules.lock
+
+# local study artifacts, not the site
+tmp-align/
+attachments/
+screenshots/
+artifacts/
+
+

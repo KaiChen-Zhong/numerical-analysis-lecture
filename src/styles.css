@@ -1,0 +1,212 @@
+@import "tailwindcss";
+@import "katex/dist/katex.min.css";
+
+@theme {
+  --font-sans: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+    system-ui, sans-serif;
+  --font-display: "Noto Serif SC", "Songti SC", "STSong", "Noto Serif", serif;
+  --font-mono: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+
+  --color-background: #f3eee4;
+  --color-foreground: #1c1915;
+  --color-card: #faf7f0;
+  --color-card-ink: #1c1915;
+  --color-muted: #e8e1d4;
+  --color-muted-foreground: #6b6458;
+  --color-subtle: #8a8274;
+  --color-primary: #1e4a6a;
+  --color-primary-foreground: #f3eee4;
+  --color-cinnabar: #8f3d2c;
+  --color-cinnabar-foreground: #faf7f0;
+  --color-pine: #2f5d50;
+  --color-pine-foreground: #faf7f0;
+  --color-border: #d4cbbd;
+  --color-ring: #1e4a6a;
+  --color-sunken: #e4ddd0;
+  --color-overlay: rgb(28 25 21 / 0.45);
+
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+
+  --shadow-border: 0 0 0 1px rgb(28 25 21 / 0.06), 0 1px 2px -1px rgb(28 25 21 / 0.06),
+    0 2px 4px 0 rgb(28 25 21 / 0.04);
+  --shadow-border-hover: 0 0 0 1px rgb(28 25 21 / 0.1), 0 2px 8px -2px rgb(28 25 21 / 0.1);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-primary) 22%, white);
+  }
+
+  input[type="range"] {
+    accent-color: var(--color-primary);
+    cursor: pointer;
+  }
+}
+
+@layer components {
+  .pressable:active:not(:disabled) {
+    scale: 0.96;
+  }
+
+  .lecture {
+    font-size: 0.975rem;
+    line-height: 1.75;
+    color: var(--color-foreground);
+  }
+
+  .lecture > * + * {
+    margin-top: 0.9em;
+  }
+
+  .lecture h1,
+  .lecture h2,
+  .lecture h3,
+  .lecture h4 {
+    margin-top: 1.6em;
+    margin-bottom: 0.45em;
+    color: var(--color-foreground);
+    font-weight: 600;
+  }
+
+  .lecture h2 {
+    font-size: 1.2rem;
+  }
+  .lecture h3 {
+    font-size: 1.08rem;
+  }
+  .lecture h4 {
+    font-size: 1rem;
+  }
+
+  .lecture a {
+    color: var(--color-primary);
+    text-underline-offset: 3px;
+    text-decoration: underline;
+    text-decoration-color: color-mix(in oklab, var(--color-primary) 35%, transparent);
+  }
+
+  .lecture strong {
+    font-weight: 600;
+  }
+
+  .lecture ul,
+  .lecture ol {
+    padding-left: 1.35em;
+  }
+
+  .lecture li + li {
+    margin-top: 0.28em;
+  }
+
+  .lecture hr {
+    border: 0;
+    border-top: 1px solid var(--color-border);
+    margin: 1.6em 0;
+  }
+
+  .lecture table {
+    width: 100%;
+    display: block;
+    overflow-x: auto;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+    line-height: 1.55;
+  }
+
+  .lecture th,
+  .lecture td {
+    border: 1px solid var(--color-border);
+    padding: 0.45rem 0.65rem;
+    text-align: left;
+    vertical-align: top;
+    min-width: 6rem;
+  }
+
+  .lecture th {
+    background: var(--color-sunken);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .lecture blockquote,
+  .lecture .callout {
+    border-left: 3px solid var(--color-cinnabar);
+    background: color-mix(in oklab, var(--color-cinnabar) 6%, var(--color-card));
+    padding: 0.7rem 0.95rem;
+    border-radius: 0 10px 10px 0;
+    color: var(--color-foreground);
+  }
+
+  .lecture .katex-display {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0.35rem 0;
+    margin: 1rem 0;
+  }
+
+  .lecture p .katex {
+    font-size: 1.02em;
+  }
+
+  .tex-block {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0.65rem 0.15rem;
+  }
+
+  .tex-block .katex-display {
+    margin: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
