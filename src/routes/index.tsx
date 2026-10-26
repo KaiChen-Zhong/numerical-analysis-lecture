@@ -234,7 +234,7 @@ function Home() {
           search={{ tab: "exercises" }}
           icon={BookOpen}
           title="指定习题"
-          detail={`${exDone}/${EXERCISES.length} 章已勾 · 共 46 题`}
+          detail={`${exDone}/${EXERCISES.length} 章已勾 · 46 题可展开详解`}
         />
       </section>
     </div>

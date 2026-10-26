@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { MIXUPS } from "@/lib/content/mixups";
 import { PROOFS } from "@/lib/content/proofs";
 import { EXERCISE_NOTES, EXERCISES } from "@/lib/content/exercises";
+import { SOLUTION_NOTES, SOLUTIONS } from "@/lib/content/solutions";
 import { getChapter, shortChapterTitle } from "@/lib/content";
 import { useProgress } from "@/lib/progress";
 import { MarkdownView } from "@/components/markdown-view";
@@ -229,10 +230,24 @@ function ExerciseList() {
   const doneMap = useProgress((s) => s.exercisesDone);
   const toggle = useProgress((s) => s.toggleExercise);
   const done = EXERCISES.filter((e) => doneMap[e.id]).length;
+  const [open, setOpen] = useState<Record<string, boolean>>({});
+  const [showNotes, setShowNotes] = useState(false);
 
   return (
     <div>
       <p className="mb-4 text-sm text-muted-foreground">{EXERCISE_NOTES}</p>
+      <div className="mb-4">
+        <Button
+          size="sm"
+          variant="secondary"
+          onClick={() => setShowNotes((v) => !v)}
+        >
+          {showNotes ? "收起核算差异" : "和书后简答对不上的地方"}
+        </Button>
+        {showNotes ? (
+          <MarkdownView markdown={SOLUTION_NOTES} className="mt-3 text-sm" />
+        ) : null}
+      </div>
       <p className="mb-4 text-sm tabular-nums">
         已勾 {done}/{EXERCISES.length} 章
       </p>
@@ -260,12 +275,32 @@ function ExerciseList() {
               </button>
             </div>
             <ol className="mt-4 flex flex-col gap-3">
-              {e.problems.map((p) => (
-                <li key={p.no} className="rounded-lg bg-sunken px-3 py-3">
-                  <p className="font-mono text-xs tabular-nums text-cinnabar">{p.no}</p>
-                  <MarkdownView markdown={p.markdown} className="mt-1 text-sm" />
-                </li>
-              ))}
+              {e.problems.map((p) => {
+                const sol = SOLUTIONS[p.no];
+                const shown = Boolean(open[p.no]);
+                return (
+                  <li key={p.no} className="rounded-lg bg-sunken px-3 py-3">
+                    <p className="font-mono text-xs tabular-nums text-cinnabar">{p.no}</p>
+                    <MarkdownView markdown={p.markdown} className="mt-1 text-sm" />
+                    {sol ? (
+                      <div className="mt-3">
+                        <Button
+                          size="sm"
+                          variant="secondary"
+                          onClick={() =>
+                            setOpen((s) => ({ ...s, [p.no]: !s[p.no] }))
+                          }
+                        >
+                          {shown ? "收起详解" : "看详解"}
+                        </Button>
+                        {shown ? (
+                          <MarkdownView markdown={sol} className="mt-3 text-sm" />
+                        ) : null}
+                      </div>
+                    ) : null}
+                  </li>
+                );
+              })}
             </ol>
             <Link
               to="/read/$chapterId"
